@@ -1,6 +1,9 @@
 import pygame
 import sys
 from map1 import *
+from raycasting import *
+from player1 import *
+
 RES = WIDTH, HEIGHT = 1920, 1080
 
 class Game:
@@ -8,20 +11,27 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode(RES)
         self.clock = pygame.time.Clock()
+        self.delta_time = 1
         self.new_game()
         
     def new_game(self):
         self.map = Map(self)
+        self.player = Player(self)
+        self.raycasting = RayCasting(self)
     
     def update(self):
+        self.player.update()
+        self.raycasting.update()
         pygame.display.flip()
-        self.clock.tick(0)
+        self.delta_time = self.clock.tick(0  )
+        #self.clock.tick(0)
         pygame.display.set_caption(f'{self.clock.get_fps() :.1f}')
         
     def draw(self):
         self.screen.fill('black')
         self.map.draw()
-    
+        self.player.draw()
+        
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
