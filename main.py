@@ -4,6 +4,8 @@ from settings1 import *
 from map1 import *
 from raycasting import *
 from player1 import *
+from sprite_object1 import *
+
 
 class Game:
     def __init__(self):
@@ -21,6 +23,10 @@ class Game:
     def update(self):
         self.player.update()
         self.raycasting.update()
+        
+        #object_renderer 완성 후 디버깅 할 것
+        #self.static_sprite.update()
+        
         pygame.display.flip()
         self.delta_time = self.clock.tick(FPS)
         #self.clock.tick(0)
