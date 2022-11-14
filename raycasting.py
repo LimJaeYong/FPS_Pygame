@@ -1,12 +1,6 @@
 import pygame
 import math
-
-FOV = math.pi / 3
-HALF_FOV = FOV / 2
-NUM_RAYS = 1600 // 2 #width
-HALF_NUM_RAYS = NUM_RAYS // 2
-DELTA_ANGLE = FOV / NUM_RAYS
-MAX_DEPTH = 20
+from settings1 import *
 
 class RayCasting:
     def __init__(self, game):
@@ -61,8 +55,21 @@ class RayCasting:
             else:
                 depth = depth_hor
                 
+                
+            #remove fishbowl effect
+            depth *= math.cos(self.game.player.angle - ray_angle)
+                
+            #projection
+            proj_height= SCREEN_DIST/ (depth+0.0001)
+
+
+            #draw wall
+            color=[255/(1+depth ** 5 * 0.00002)] *3
+            pygame.draw.rect(self.game.screen,color,
+                        (ray*SCALE,HALF_HEIGHT-proj_height //2,SCALE,proj_height))
+                
             #디버깅
-            pygame.draw.line(self.game.screen, 'yellow', (100*ox,100*oy),(100*ox+100*depth*cos_a, 100*oy+100*depth*sin_a),2)
+            #pygame.draw.line(self.game.screen, 'yellow', (100*ox,100*oy),(100*ox+100*depth*cos_a, 100*oy+100*depth*sin_a),2)
             
             ray_angle += DELTA_ANGLE
     

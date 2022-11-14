@@ -1,12 +1,6 @@
 import pygame as pg
 import math
-
-PLAYER_POS =  1.5, 5 #mini_map
-PLAYER_ANGLE = 0
-PLAYER_SPEED = 0.004
-PLAYER_ROT_SPEED = 0.002
-RES = WIDTH, HEIGHT = 1920, 1080
-
+from settings1 import *
 
 class Player:
     def __init__(self, game):
@@ -22,6 +16,7 @@ class Player:
         speed_sin = speed * sin_a
         speed_cos = speed * cos_a
         
+        # W, A, S, D 입력 이벤트
         keys = pg.key.get_pressed()
         if keys[pg.K_w]:
             dx += speed_cos
@@ -43,7 +38,9 @@ class Player:
         if keys[pg.K_RIGHT]:
             self.angle += PLAYER_ROT_SPEED * self.game.delta_time
         self.angle %= math.tau   
-            
+    
+    
+    #벽 충돌 검사        
     def check_wall(self, x, y):
         return (x, y) not in self.game.map.world_map
     
