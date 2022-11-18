@@ -4,12 +4,14 @@ from settings1 import *
 from map1 import *
 from raycasting import *
 from player1 import *
+from object_renderer import *
 from sprite_object1 import *
 
 
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.mouse.set_visible(False) #마우스 포인트 숨기기
         self.screen = pygame.display.set_mode(RES)
         self.clock = pygame.time.Clock()
         self.delta_time = 1
@@ -18,13 +20,14 @@ class Game:
     def new_game(self):
         self.map = Map(self)
         self.player = Player(self)
+        self.object_renderer = ObjectRenderer(self)
         self.raycasting = RayCasting(self)
     
     def update(self):
         self.player.update()
         self.raycasting.update()
         
-        #object_renderer 완성 후 디버깅 할 것
+        #object_renderer 완성 후 실행
         #self.static_sprite.update()
         
         pygame.display.flip()
@@ -33,7 +36,8 @@ class Game:
         pygame.display.set_caption(f'{self.clock.get_fps() :.1f}')
         
     def draw(self):
-        self.screen.fill('black')
+        #self.screen.fill('black')
+        self.object_renderer.draw()
         #self.map.draw()
         #self.player.draw()
         

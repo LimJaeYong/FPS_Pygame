@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from settings1 import *
 
 class ObjectRenderer:
     def __init__(self,game):
@@ -14,10 +14,10 @@ class ObjectRenderer:
         self.render_game_objects()
 
     def draw_background(self):
-        self.sky_offset = (self.sky_offset +4.0 * self.game.player.rel) %WIDTH
+        self.sky_offset = (self.sky_offset + 4.5 * self.game.player.rel) %WIDTH
         self.screen.blit(self.sky_image,(-self.sky_offset,0))
         self.screen.blit(self.sky_image,(-self.sky_offset +WIDTH,0))
-        #floor
+        # 바닥
         pg.draw.rect(self.screen,FLOOR_COLOR,(0,HALF_HEIGHT,WIDTH,HEIGHT))
         
     def render_game_objects(self):
