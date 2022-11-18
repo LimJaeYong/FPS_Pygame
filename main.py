@@ -6,6 +6,7 @@ from raycasting import *
 from player1 import *
 from object_renderer import *
 from sprite_object1 import *
+from object_handler import *
 
 
 class Game:
@@ -22,13 +23,19 @@ class Game:
         self.player = Player(self)
         self.object_renderer = ObjectRenderer(self)
         self.raycasting = RayCasting(self)
+        # self.static_sprite = SpriteObject(self)
+        # self.animated_sprite = AnimatedSprite(self)
+        self.object_handler = ObjectHandler(self)
     
     def update(self):
         self.player.update()
         self.raycasting.update()
         
         #object_renderer 완성 후 실행
-        #self.static_sprite.update()
+        # self.static_sprite.update()
+        # self.animated_sprite.update()
+        
+        self.object_handler.update() 
         
         pygame.display.flip()
         self.delta_time = self.clock.tick(FPS)
