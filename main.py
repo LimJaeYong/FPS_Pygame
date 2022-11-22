@@ -62,34 +62,30 @@ class Game:
 
 
 class Menu:
-    SURFACE = pygame.display.set_mode((600, 400))
     pygame.init()
-    surface = pygame.display.set_mode((600, 400)) 
+    surface = pygame.display.set_mode((600, 400))
 
-    def level(self, value): #난이도 선택시 호출되는 함수
+    def level(self, value):  # 난이도 선택시 호출되는 함수
         print("난이도 선택값:", value)
 
-    def start(): # 게임시작 선택시 호출되는 함수
+    def start():  # 게임시작 선택시 호출되는 함수
         print("게임시작")
         game = Game()
         game.run()
-    
+
     def quit():
         pygame.quit()
         sys.exit()
 
-    t = pygame_menu.themes.THEME_DARK; #블루테마 사용
-    t.widget_font=pygame.font.SysFont("gulim",30) #폰트:굴림체,30크기
+    t = pygame_menu.themes.THEME_DARK
+    t.widget_font = pygame.font.SysFont("gothic", 30)
 
-    menu = pygame_menu.Menu("Menu",400,300,theme=t) #메뉴윈도우 크기
-    menu.add.selector("Level ",[("Hard",1),("Easy",2)],onchange=level)
-    menu.add.button("Game Start", start)
-    menu.add.button("Quit game", quit)
+    menu = pygame_menu.Menu("DOOM", 400, 300, theme=t)
+    menu.add.selector("Level ", [("Hard", 1), ("Easy", 2)], onchange=level)
+    menu.add.button("Start", start)
+    menu.add.button("Quit", quit)
     menu.mainloop(surface)
 
 
-
 if __name__ == '__main__':
-    menu = Menu()
-    menu
-    
+    Menu()
