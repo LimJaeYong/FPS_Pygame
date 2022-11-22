@@ -5,7 +5,7 @@ import os
 
 class SpriteObject:
     def __init__(self, game, path = 'resources/sprites/static_sprites/candlebra.png', 
-                 pos = (10.5, 3.5), scale = 1.0, shift = 0.0):
+                 pos = (10.5, 3.5), scale = 0, shift = 0):
         self.game = game
         self.player = game.player
         self.x, self.y = pos
@@ -38,7 +38,7 @@ class SpriteObject:
         self.dx, self.dy = dx, dy
          
         #플레이어가 구조물을 바라보는 각 계산
-        self.theta = math.atan2(dx, dy) # atan2 : 인수가 2개인 역탄젠트
+        self.theta = math.atan2(dy, dx) # atan2 : 인수가 2개인 역탄젠트
         
         #플레이어 앵글
         #세타와 플레이어 방향각의 차이  
@@ -63,7 +63,7 @@ class SpriteObject:
         
 class AnimatedSprite(SpriteObject):
     def __init__(self, game, path='resources/sprites/animated_sprites/green_light/0.png',
-                 pos=(11.5, 3.5), scale=0.8, shift=0.16, animation_time=120):
+                 pos=(11.5, 3.5), scale=0, shift=0, animation_time=120):
         super().__init__(game, path, pos, scale, shift)
         self.animation_time = animation_time
         self.path = path.rsplit('/', 1)[0]
