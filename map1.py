@@ -83,7 +83,7 @@ class Map:
         self.get_map()
 
     def get_map(self):
-        if self.menu.select_map == 1:
+        if self.menu.select_map == 1: # 메뉴에서 넘어오는 맵 선택 변수
             self.mini_map = mini_map1
         elif self.menu.select_map == 2:
             self.mini_map = mini_map2        
