@@ -3,12 +3,12 @@ import sys
 import pygame_menu
 from settings1 import *
 from map1 import *
+from map2 import *
 from raycasting import *
 from player1 import *
 from object_renderer import *
 from sprite_object1 import *
 from object_handler import *
-
 
 class Game:
     def __init__(self):
@@ -64,9 +64,15 @@ class Game:
 class Menu:
     pygame.init()
     surface = pygame.display.set_mode((600, 400))
+    select_map = 0
 
     def level(self, value):  # 난이도 선택시 호출되는 함수
+        global select_map
         print("난이도 선택값:", value)
+        if value == 1:
+            select_map = 1
+        elif value == 2:
+            select_map = 2
 
     def start():  # 게임시작 선택시 호출되는 함수
         print("게임시작")
@@ -76,6 +82,7 @@ class Menu:
     def quit():
         pygame.quit()
         sys.exit()
+    
 
     t = pygame_menu.themes.THEME_DARK
     t.widget_font = pygame.font.SysFont("gothic", 30)
