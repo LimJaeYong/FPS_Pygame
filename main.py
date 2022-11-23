@@ -3,14 +3,13 @@ import sys
 import pygame_menu
 from settings1 import *
 from map1 import *
-from map2 import *
 from raycasting import *
 from player1 import *
 from object_renderer import *
 from sprite_object1 import *
 from object_handler import *
 
-class Game:
+class Game:    
     def __init__(self):
         pygame.mouse.set_visible(False)  # 마우스 포인트 숨기기
         self.screen = pygame.display.set_mode(RES)
@@ -61,20 +60,18 @@ class Game:
             self.draw()
 
 
-class Menu:
-    pygame.init()
-    surface = pygame.display.set_mode((600, 400))
-    select_map = 0
+class Menu:     
+    def __init__(self):
+        pygame.init()
+        #self.game = game
+        self.SELECT_MAP = 0
 
     def level(self, value):  # 난이도 선택시 호출되는 함수
-        global select_map
         print("난이도 선택값:", value)
-        if value == 1:
-            select_map = 1
-        elif value == 2:
-            select_map = 2
+        self.SELECT_MAP = value
+        print(self.SELECT_MAP)
 
-    def start():  # 게임시작 선택시 호출되는 함수
+    def start(self):  # 게임시작 선택시 호출되는 함수
         print("게임시작")
         game = Game()
         game.run()
@@ -83,16 +80,18 @@ class Menu:
         pygame.quit()
         sys.exit()
     
+    def run(self):
+        surface = pygame.display.set_mode((600, 400))
+        t = pygame_menu.themes.THEME_DARK
+        t.widget_font = pygame.font.SysFont("gothic", 30)
 
-    t = pygame_menu.themes.THEME_DARK
-    t.widget_font = pygame.font.SysFont("gothic", 30)
-
-    menu = pygame_menu.Menu("DOOM", 400, 300, theme=t)
-    menu.add.selector("Level ", [("Hard", 1), ("Easy", 2)], onchange=level)
-    menu.add.button("Start", start)
-    menu.add.button("Quit", quit)
-    menu.mainloop(surface)
+        menu = pygame_menu.Menu("DOOM", 400, 300, theme=t)
+        menu.add.selector("Level ", [("Hard", 1), ("Easy", 2)], onchange = self.level)
+        menu.add.button("Start", self.start)
+        menu.add.button("Quit", quit)
+        menu.mainloop(surface)
 
 
 if __name__ == '__main__':
-    Menu()
+    menu = Menu()
+    menu.run()

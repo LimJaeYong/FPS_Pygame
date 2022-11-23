@@ -1,5 +1,5 @@
 import pygame as pg
-from main import Menu
+from main import *
 
 _ = False
 mini_map1 = [
@@ -76,18 +76,21 @@ mini_map2 = [
 class Map:
     def __init__(self, game):
         self.game = game
-        self.menu = Menu()
-        self.world_map = {}
+        # menu = Menu()
+        # SELECT_MAP = menu.SELECT_MAP
+        
+        # if SELECT_MAP == 1: # 메뉴에서 넘어오는 맵 선택 변수
+        #     self.mini_map = mini_map1
+        # elif SELECT_MAP == 2:
+        #     self.mini_map = mini_map2
+        
+        self.mini_map = mini_map1
+        self.world_map = {}        
         self.rows = len(self.mini_map)
         self.cols = len(self.mini_map[0])
         self.get_map()
 
-    def get_map(self):
-        if self.menu.select_map == 1: # 메뉴에서 넘어오는 맵 선택 변수
-            self.mini_map = mini_map1
-        elif self.menu.select_map == 2:
-            self.mini_map = mini_map2        
-        
+    def get_map(self):            
         for j, row in enumerate(self.mini_map):
             for i, value in enumerate(row):
                 if value:
