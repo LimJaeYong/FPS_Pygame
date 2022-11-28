@@ -74,7 +74,7 @@ mini_map2 = [
 ]
 
 
-class Map1:
+class Map:
     def __init__(self, game, value):
         self.game = game
         self.world_map = {}
