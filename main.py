@@ -8,23 +8,33 @@ from player1 import *
 from object_renderer import *
 from sprite_object1 import *
 from object_handler import *
+from weapon import *
+from sound import *
+from pathfinding import *
 
-class Game:    
+
+class Game:
     def __init__(self):
         pygame.mouse.set_visible(False)  # 마우스 포인트 숨기기
         self.screen = pygame.display.set_mode(RES)
         self.clock = pygame.time.Clock()
         self.delta_time = 1
+        self.global_trigger = False
+        self.global_event = pygame.USEREVENT + 0
+        pygame.time.set_timer(self.global_event, 40)  # 타이머 40밀리초 설정
         self.new_game()
 
     def new_game(self):
-        self.map = Map1(self, value = SELECT_MAP)
+        self.map = Map(self, value=SELECT_MAP)
         self.player = Player(self)
         self.object_renderer = ObjectRenderer(self)
         self.raycasting = RayCasting(self)
         # self.static_sprite = SpriteObject(self)
         # self.animated_sprite = AnimatedSprite(self)
         self.object_handler = ObjectHandler(self)
+        self.weapon = Weapon(self)
+        self.sound = Sound(self)
+        self.pathfinding = PathFinding(self)
 
     def update(self):
         self.player.update()
@@ -35,6 +45,7 @@ class Game:
         # self.animated_sprite.update()
 
         self.object_handler.update()
+        self.weapon.update()
 
         pygame.display.flip()
         self.delta_time = self.clock.tick(FPS)
@@ -44,14 +55,19 @@ class Game:
     def draw(self):
         # self.screen.fill('black')
         self.object_renderer.draw()
+        self.weapon.draw
         # self.map.draw()
         # self.player.draw()
 
     def check_events(self):
+        self.global_trigger = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 sys.exit()
+            elif event.type == self.global_event:
+                self.global_trigger = True
+            self.player.single_fire_event(event)
 
     def run(self):
         while True:
@@ -60,7 +76,7 @@ class Game:
             self.draw()
 
 
-class Menu:     
+class Menu:
     def __init__(self):
         pygame.init()
 
@@ -78,7 +94,7 @@ class Menu:
     def quit():
         pygame.quit()
         sys.exit()
-    
+
     def run(self):
         global SELECT_MAP
         SELECT_MAP = 1
@@ -87,7 +103,7 @@ class Menu:
         t.widget_font = pygame.font.SysFont("gothic", 30)
 
         menu = pygame_menu.Menu("DOOM", 400, 300, theme=t)
-        menu.add.selector("Map ", [("1", 1), ("2", 2)], onchange = self.level)
+        menu.add.selector("Map ", [("1", 1), ("2", 2)], onchange=self.level)
         menu.add.button("Start", self.start)
         menu.add.button("Quit", quit)
         menu.mainloop(surface)
@@ -95,4 +111,4 @@ class Menu:
 
 if __name__ == '__main__':
     menu = Menu()
-    menu.run() 
+    menu.run()
