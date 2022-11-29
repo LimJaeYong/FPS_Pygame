@@ -77,7 +77,6 @@ class Player:
         self.angle %= math.tau
 
     # 벽 충돌 검사
-
     def check_wall(self, x, y):
         return (x, y) not in self.game.map.world_map
 
